@@ -2,64 +2,40 @@ var gulp = require('gulp'),
     less = require('gulp-less'),
     csso = require('gulp-csso'),
     uglify = require('gulp-uglify'),
-    rev = require('gulp-rev'),
-    collector = require('gulp-rev-collector'),
-    clean = require('gulp-clean'),
-    watch = require('gulp-watch');
+    usemin = require('gulp-usemin'),
+    imagemin = require('gulp-imagemin');
 
 // 默认监听
 gulp.task('default', function () {
-    gulp.watch('css/**/*.less', ['less']);
+    gulp.watch('css/*.less', ['less']);
 });
 
-// 清除所有打包文件
-gulp.task('clean', function () {
-    gulp.src('dist')
-        .pipe(clean());
-    return gulp.src('rev')
-        .pipe(clean());
-});
-
-// 打包编译Less
+// 编译Less
 gulp.task('less', function () {
     return gulp.src('css/*.less')
         .pipe(less())
-        .pipe(gulp.dest('css'))
-        .pipe(csso())
-        .pipe(rev())
-        .pipe(gulp.dest('dist/css'))
-        .pipe(rev.manifest({
-            path: 'rev-css.json'
-        }))
-        .pipe(gulp.dest('rev'));
+        .pipe(gulp.dest('css'));
 });
 
-// 打包资源js
-gulp.task('js', function () {
-    return gulp.src('js/*.js')
-        .pipe(uglify())
-        .pipe(rev())
-        .pipe(gulp.dest('dist/js'))
-        .pipe(rev.manifest({
-            path: 'rev-js.json'
+// 图片压缩
+gulp.task('image', function () {
+    return gulp.src('images/*')
+        .pipe(imagemin({
+            progressive: true
         }))
-        .pipe(gulp.dest('rev'));
-});
-
-// 打包组件js、css、fonts、images
-gulp.task('components', ['js'], function () {
-    gulp.src('images/*')
         .pipe(gulp.dest('dist/images'));
-
 });
 
-// 文件增量更新重命名
-gulp.task('collector', ['less', 'js', 'components'], function () {
-    return gulp.src(['rev/*.json', 'views/**/*.html'])
-        .pipe(collector())
+// 整体打包
+gulp.task('dist', ['less', 'image'], function () {
+    gulp.src('*.mp4')
         .pipe(gulp.dest('dist'));
-});
 
-gulp.task('dist', ['less', 'js', 'components', 'collector'], function () {
-
+    return gulp.src('*.html')
+        .pipe(usemin({
+            css: [csso()],
+            js: [uglify()],
+            zeptojs: [uglify()]
+        }))
+        .pipe(gulp.dest('dist'));
 });

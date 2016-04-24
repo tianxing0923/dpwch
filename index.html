@@ -3,18 +3,118 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="author" content="erictian">
     <meta name="description" content="YY直播黄致列大牌玩唱会">
     <title>YY直播黄致列大牌玩唱会</title>
+    <!-- build:css css/style.css -->
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/style.css">
+    <!-- endbuild -->
 </head>
 <body>
-    <section class="first"></section>
-    <section class="second"></section>
-    <section class="three"></section>
+    <div id="loading_mask" class="loading-mask animated">
+        <div class="load-wrap loader">
+            <div class="loading"></div>
+            <p id="load_text" class="load-text">Loading... 0%</p>
+        </div>
+    </div>
+    <div id="container" class="container"></div>
+    <script id="tpl" type="text/html">
+        <section id="first" class="first page animated fadeIn">
+            <div class="btn-desc pos-abs"></div>
+            <div class="title pos-abs animated fadeInDown"></div>
+            <div class="slogan pos-abs animated fadeInRight"></div>
+            <div class="video-wrap pos-abs">
+                <div id="video_box" class="video-box">
+                    <div id="btn_play" class="btn-play"></div>
+                </div>
+            </div>
+            <div id="btn_start" class="btn-start pos-abs"></div>
+        </section>
+        <section id="second" class="second page animated fadeIn hide">
+            <div class="btn-desc pos-abs"></div>
+            <div class="title pos-abs animated fadeInDown"></div>
+            <div id="posture_wrap" class="posture-wrap pos-abs">
+                <div id="posture_1" class="posture posture-1 animated fadeIn hide">
+                    <div class="posture-title pos-abs animated slideInDown" title="给我唱歌"></div>
+                    <div class="posture-desc pos-abs animated bounceInRight" title="让致列欧巴现场给我唱首专属情歌，"></div>
+                </div>
+                <div id="posture_2" class="posture posture-2 animated fadeOut hide">
+                    <div class="posture-title pos-abs animated" title="脱脱脱！"></div>
+                    <div class="posture-desc pos-abs animated" title="脱脱脱！让致列欧巴现场脱衣服露胸肌，"></div>
+                </div>
+                <div id="posture_3" class="posture posture-3 animated fadeOut hide">
+                    <div class="posture-title pos-abs animated" title="叫我起床"></div>
+                    <div class="posture-desc pos-abs animated" title="叫我起床！让欧巴给我录一段温柔的起床铃声，"></div>
+                </div>
+                <div id="posture_4" class="posture posture-4 animated fadeOut hide">
+                    <div class="posture-title pos-abs animated" title="跟我告白"></div>
+                    <div class="posture-desc pos-abs animated" title="跟我告白！我要听欧巴现场跟我电话告白！"></div>
+                </div>
+                <div id="posture_5" class="posture posture-5 animated fadeOut hide">
+                    <div class="posture-title pos-abs animated" title="亲亲十连拍"></div>
+                    <div class="posture-desc pos-abs animated" title="亲亲十连拍！现场录下来，每天看十遍！"></div>
+                </div>
+                <div id="btn_like" class="btn-like pos-abs"></div>
+            </div>
+            <div id="btn_change" class="btn-change pos-abs"></div>
+        </section>
+        <section id="third" class="third page animated fadeIn hide">
+            <div class="share pos-abs"></div>
+            <img class="qrcode pos-abs" src="images/qrcode.png" width="94.5">
+            <a class="btn-seat pos-abs" href="http://fun.yy.com/dpwch"></a>
+            <div class="concluding-remarks pos-abs"></div>
+        </section>
+        <section id="activity_desc" class="activity-desc page animated fadeIn hide">
+            <div class="desc pos-abs animated bounceIn"></div>
+        </section>
+    </script>
+    <!-- build:zeptojs js/zepto.js -->
     <script src="js/zepto/zepto.js"></script>
+    <script src="js/zepto/ajax.js"></script>
     <script src="js/zepto/event.js"></script>
+    <!-- endbuild -->
+    <script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <!-- build:js js/index.js -->
+    <script src="js/motion.js"></script>
     <script src="js/index.js"></script>
+    <!-- endbuild -->
+    <script>
+        // 分享参数
+        var SHARE_OBJ = {
+            title: '黄致列YY直播大牌玩唱会',
+            desc: '黄致列大牌玩唱会，快来YY直播吧~',
+            link: location.href,
+            imgUrl: 'http://xx.xx.com/dpwch/images/thumbnail.png',
+            success: function () { }
+        };
+
+        // 初始化分享
+        function initShare() {
+            $.get('拉取分享地址接口', {
+                    u: location.href
+                }, function (data) {
+                    wx.config({
+                        appId: data.appId,
+                        timestamp: data.timestamp,
+                        nonceStr: data.nonceStr,
+                        signature: data.signature,
+                        jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline']
+                    });
+
+                    wx.ready(function () {
+
+                        // 分享给朋友
+                        wx.onMenuShareAppMessage(SHARE_OBJ);
+
+                        // 分享到朋友圈
+                        wx.onMenuShareTimeline(SHARE_OBJ);
+                    });
+                });
+        }
+
+        initShare();
+    </script>
 </body>
 </html>
