@@ -107,15 +107,14 @@ $(function () {
 
         // 换种姿势
         $('#btn_change').on('click', function (e) {
-            var rdm = Math.ceil(5 * Math.random()),
-                $current = $('#posture_wrap').find('.posture.fadeIn'),
+            var $current = $('#posture_wrap').find('.posture.fadeIn'),
                 currentIndex = $current.index() + 1,
                 $btn_like = $('#btn_like'),
                 $posture;
-            if (rdm != currentIndex) {
-                $posture = $('#posture_' + rdm);
+            if (currentIndex >= 5) {
+                $posture = $('#posture_1');
             } else {
-                $posture = $('#posture_' + (rdm == 5 ? rdm - 1 : rdm + 1));
+                $posture = $('#posture_' + (currentIndex + 1));
             }
             $current.removeClass('fadeIn').addClass('fadeOut');
             $current.find('.posture-title').removeClass('slideInDown').addClass('slideOutUp');

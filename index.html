@@ -89,40 +89,46 @@
             title: 'YY直播黄致列大牌玩唱会',
             desc: '黄致列大牌玩唱会，快来YY直播吧~',
             link: location.href,
-            imgUrl: 'http://fun.yy.com/dpwch/images/thumbnail.png',
+            imgUrl: 'http://fun.yy.com/html/publish/s/hd/dpwch/images/thumbnail.png',
             success: function () { }
         };
 
         // 初始化分享
         function initShare() {
-            $.get('http://fun.yy.com/platform/getWxSecretWithUrl.action', {
-                url: location.href
-            }, function (data) {
-                wx.config({
-                    appId: 'wx3c529a4e1aa3bb19',
-                    timestamp: data.timestamp,
-                    nonceStr: data.noncestr,
-                    signature: data.secret,
-                    jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone']
-                });
+            $.ajax({
+                url: 'http://fun.yy.com/platform/getWxSecretWithUrl.action',
+                type: 'GET',
+                data: {
+                    url: location.href
+                },
+                dataType: 'json',
+                success: function (data) {
+                    wx.config({
+                        appId: 'wx3c529a4e1aa3bb19',
+                        timestamp: data.timestamp,
+                        nonceStr: data.noncestr,
+                        signature: data.secret,
+                        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone']
+                    });
 
-                wx.ready(function () {
+                    wx.ready(function () {
 
-                    // 分享到朋友圈
-                    wx.onMenuShareTimeline(SHARE_OBJ);
+                        // 分享到朋友圈
+                        wx.onMenuShareTimeline(SHARE_OBJ);
 
-                    // 分享给朋友
-                    wx.onMenuShareAppMessage(SHARE_OBJ);
+                        // 分享给朋友
+                        wx.onMenuShareAppMessage(SHARE_OBJ);
 
-                    // 分享到QQ
-                    wx.onMenuShareQQ(SHARE_OBJ);
+                        // 分享到QQ
+                        wx.onMenuShareQQ(SHARE_OBJ);
 
-                    // 分享到腾讯微博
-                    wx.onMenuShareWeibo(SHARE_OBJ);
+                        // 分享到腾讯微博
+                        wx.onMenuShareWeibo(SHARE_OBJ);
 
-                    // 分享到QQ空间
-                    wx.onMenuShareQZone(SHARE_OBJ);
-                });
+                        // 分享到QQ空间
+                        wx.onMenuShareQZone(SHARE_OBJ);
+                    });
+                }
             });
         }
 
