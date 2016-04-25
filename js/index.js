@@ -8,6 +8,7 @@ $(function () {
         'images/btn_desc.png',
         'images/btn_like.png',
         'images/btn_play.png',
+        'images/bg_posture_1.png',
         'images/btn_seat.png',
         'images/btn_start.png',
         'images/concluding_remarks.png',
@@ -15,25 +16,25 @@ $(function () {
         'images/posture_1_desc.png',
         'images/posture_1_title.png',
         'images/posture_2_desc.png',
+        'images/bg_posture_2.png',
         'images/posture_2_title.png',
         'images/posture_3_desc.png',
         'images/posture_3_title.png',
         'images/posture_4_desc.png',
+        'images/bg_posture_3.png',
         'images/posture_4_title.png',
         'images/posture_5_desc.png',
         'images/posture_5_title.png',
         'images/qrcode.png',
+        'images/bg_posture_4.png',
         'images/share.png',
         'images/slogan.png',
         'images/title.png',
         'images/title_2.png',
         'images/bg_first.jpg',
-        'images/bg_posture_1.png',
-        'images/bg_posture_2.png',
-        'images/bg_posture_3.png',
-        'images/bg_posture_4.png',
         'images/bg_posture_5.png',
-        'images/bg_third.jpg'
+        'images/bg_third.jpg',
+        'images/qrtext.png'
     ];
 
     new mo.Loader(sourceArr, {
@@ -128,9 +129,6 @@ $(function () {
         $('#btn_like').on('click', function (e) {
             $('#second').removeClass('show');
             $('#third').removeClass('hide').addClass('show');
-            var $posture = $('#posture_wrap').find('.posture.fadeIn'),
-                title = $posture.find('.posture-desc').attr('title');
-            SHARE_OBJ.desc = title + '快来YY直播吧~';
         });
     }
 });
