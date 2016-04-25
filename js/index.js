@@ -127,8 +127,8 @@ $(function () {
 
         // 我喜欢
         $('#btn_like').on('click', function (e) {
-            $('#second').removeClass('show');
-            $('#third').removeClass('hide').addClass('show');
+            $('#second').removeClass('fadeIn').addClass('fadeOut');
+            $('#third').removeClass('hide');
         });
     }
 });
